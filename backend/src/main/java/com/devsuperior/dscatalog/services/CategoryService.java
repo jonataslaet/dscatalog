@@ -37,4 +37,17 @@ public class CategoryService {
 		category = categoryRepository.save(category);
 		return new CategoryDTO(category);
 	}
+
+	public CategoryDTO update(Long id, CategoryDTO categoryDTO) {
+		try {
+			findById(id);
+			categoryDTO.setId(id);
+			Category category = categoryRepository.save(new Category(categoryDTO));
+			return new CategoryDTO(category);
+		}
+		catch (Exception e) {
+			throw new EntityNotFoundException("asf");
+		}
+		
+	}
 }
