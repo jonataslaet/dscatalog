@@ -50,4 +50,15 @@ public class CategoryService {
 		}
 		
 	}
+	
+	public void delete(Long id) {
+		try {
+			findById(id);
+			categoryRepository.deleteById(id);
+		}
+		catch (Exception e) {
+			throw new EntityNotFoundException("asf");
+		}
+		
+	}
 }
