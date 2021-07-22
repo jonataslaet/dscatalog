@@ -1,10 +1,10 @@
 package com.devsuperior.dscatalog.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,11 +20,11 @@ public class CategoryService {
 	private CategoryRepository categoryRepository;
 
 	@Transactional(readOnly=true)
-	public List<CategoryDTO> findAll() {
-		List<Category> categories = categoryRepository.findAll();
-		return categories.stream().map(c -> new CategoryDTO(c)).collect(Collectors.toList());
+	public Page<CategoryDTO> findAllPaged(PageRequest pageRequest) {
+		Page<Category> categoriesPaged = categoryRepository.findAll(pageRequest);
+		return categoriesPaged.map(c -> new CategoryDTO(c));
 	}
-
+	
 	@Transactional(readOnly=true)
 	public CategoryDTO findById(Long id) {
 		Optional<Category> categoryOptional = categoryRepository.findById(id);
@@ -61,4 +61,5 @@ public class CategoryService {
 		}
 		
 	}
+
 }
