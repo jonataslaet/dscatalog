@@ -8,8 +8,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
+import com.devsuperior.dscatalog.repositories.CategoryRepository;
 import com.devsuperior.dscatalog.repositories.ProductRepository;
+import com.devsuperior.dscatalog.resources.dtos.CategoryDTO;
 import com.devsuperior.dscatalog.resources.dtos.ProductDTO;
 import com.devsuperior.dscatalog.resources.exceptions.EntityNotFoundException;
 
@@ -19,6 +22,9 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
 	@Transactional(readOnly=true)
 	public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {
 		Page<Product> productsPaged = productRepository.findAll(pageRequest);
@@ -39,10 +45,12 @@ public class ProductService {
 	}
 
 	public ProductDTO update(Long id, ProductDTO productDTO) {
+		Product product = new Product();
 		try {
 			findById(id);
-			productDTO.setId(id);
-			Product product = productRepository.save(new Product(productDTO));
+			copyDtoToEntity(productDTO, product);
+			product.setId(id);
+			productRepository.save(product);
 			return new ProductDTO(product);
 		}
 		catch (Exception e) {
@@ -60,6 +68,21 @@ public class ProductService {
 			throw new EntityNotFoundException("asf");
 		}
 		
+	}
+	
+	private void copyDtoToEntity(ProductDTO productDTO, Product product) {
+		product.setName(productDTO.getName());
+		product.setDescription(productDTO.getDescription());
+		product.setImgUrl(productDTO.getImgUrl());
+		product.setPrice(productDTO.getPrice());
+		product.setDate(productDTO.getDate());
+		
+		product.getCategories().clear();
+		
+		for (CategoryDTO catDTO : productDTO.getCategories()) {
+			Category cat = categoryRepository.findById(catDTO.getId()).get();
+			product.getCategories().add(cat);
+		}
 	}
 
 }
