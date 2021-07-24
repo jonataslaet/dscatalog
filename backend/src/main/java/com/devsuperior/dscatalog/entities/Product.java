@@ -17,7 +17,6 @@ import javax.persistence.Table;
 
 import com.devsuperior.dscatalog.resources.dtos.ProductDTO;
 
-//price, date, description, img_url
 @Entity
 @Table(name = "tb_product")
 public class Product implements Serializable {
