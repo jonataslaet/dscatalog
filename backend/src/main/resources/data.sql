@@ -1,3 +1,15 @@
+INSERT INTO tb_client (name, cpf, income, birth_date, children) VALUES ('Maria Silva', '12345678901', 6500, TIMESTAMP WITH TIME ZONE '1994-07-20T10:30:00Z', 2);
+INSERT INTO tb_client (name, cpf, income, birth_date, children) VALUES ('Jonatas Laet', '05110256388', 1234567.0, TIMESTAMP WITH TIME ZONE '2000-07-13T20:50:07.12345Z', 3);
+INSERT INTO tb_client (name, cpf, income, birth_date, children) VALUES ('Carla Laet', '05110256381', 1234567.1, TIMESTAMP WITH TIME ZONE '2002-07-13T20:50:07.12345Z', 3);
+INSERT INTO tb_client (name, cpf, income, birth_date, children) VALUES ('Jucilene Santos', '02110256388', 1234567.2, TIMESTAMP WITH TIME ZONE '1988-07-13T20:50:07.12345Z', 1);
+INSERT INTO tb_client (name, cpf, income, birth_date, children) VALUES ('Joseane Santos', '02110256381', 1234567.3, TIMESTAMP WITH TIME ZONE '1999-07-13T20:50:07.12345Z', 1);
+INSERT INTO tb_client (name, cpf, income, birth_date, children) VALUES ('Afonso Laet', '05110256322', 1234567.4, TIMESTAMP WITH TIME ZONE '2000-07-13T20:50:07.12345Z', 3);
+INSERT INTO tb_client (name, cpf, income, birth_date, children) VALUES ('Andrea Laet', '05100256381', 1234567.5, TIMESTAMP WITH TIME ZONE '2000-07-13T20:50:07.12345Z', 3);
+INSERT INTO tb_client (name, cpf, income, birth_date, children) VALUES ('Adryanna Laet', '01110256388', 1234567.6, TIMESTAMP WITH TIME ZONE '2000-07-13T20:50:07.12345Z', 1);
+INSERT INTO tb_client (name, cpf, income, birth_date, children) VALUES ('Ana Laet', '05110256321', 1234567.7, TIMESTAMP WITH TIME ZONE '2002-07-13T20:50:07.12345Z', 3);
+INSERT INTO tb_client (name, cpf, income, birth_date, children) VALUES ('Lara Laet', '05010256383', 1234567.8, TIMESTAMP WITH TIME ZONE '2000-07-13T20:50:07.12345Z', 1);
+INSERT INTO tb_client (name, cpf, income, birth_date, children) VALUES ('Márcia Laet', '05110256381', 1234567.9, TIMESTAMP WITH TIME ZONE '1999-07-13T20:50:07.12345Z', 1);
+
 INSERT INTO tb_category (name, created_At) VALUES ('Books', NOW());
 INSERT INTO tb_category (name, created_At) VALUES ('Eletronics', NOW());
 INSERT INTO tb_category (name, created_At) VALUES ('Computers', NOW());
