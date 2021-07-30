@@ -54,7 +54,7 @@ public class ProductService {
 			return new ProductDTO(product);
 		}
 		catch (Exception e) {
-			throw new EntityNotFoundException("asf");
+			throw new EntityNotFoundException("Product not found");
 		}
 		
 	}
@@ -65,7 +65,7 @@ public class ProductService {
 			productRepository.deleteById(id);
 		}
 		catch (Exception e) {
-			throw new EntityNotFoundException("asf");
+			throw new EntityNotFoundException("Product not found");
 		}
 		
 	}
