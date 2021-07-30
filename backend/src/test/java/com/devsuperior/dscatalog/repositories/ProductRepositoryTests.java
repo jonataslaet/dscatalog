@@ -54,4 +54,16 @@ class ProductRepositoryTests {
 		Assertions.assertNotNull(save.getId());
 		Assertions.assertEquals(countedTotalProducts+1, save.getId());
 	}
+	
+	@Test
+	void findByIdShouldReturnProductWhenIdExists() {
+		Optional<Product> productFound = productRepository.findById(existingId);
+		Assertions.assertTrue(productFound.isPresent());
+	}
+	
+	@Test
+	void findByIdShouldNotReturnProductWhenIdDoesNotExist() {
+		Optional<Product> productFound = productRepository.findById(nonExistingId);
+		Assertions.assertFalse(productFound.isPresent());
+	}
 }
