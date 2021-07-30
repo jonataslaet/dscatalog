@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.devsuperior.dscatalog.entities.Product;
+import com.devsuperior.dscatalog.resources.exceptions.EntityNotFoundException;
 
 @DataJpaTest
 class ProductRepositoryTests {
@@ -26,4 +27,16 @@ class ProductRepositoryTests {
 		Assertions.assertFalse(productFound.isPresent());
 	}
 
+	@Test
+	void deleteShouldThrowEntityNotFoundExceptionWhenIdDoesNotExist() {
+		Long nonExistingId = 9999999L;
+		
+		Optional<Product> productFound = productRepository.findById(nonExistingId);
+		
+		Assertions.assertFalse(productFound.isPresent());
+		
+		Assertions.assertThrows(EntityNotFoundException.class, ()->{
+			productRepository.deleteById(nonExistingId);
+		});
+	}
 }
