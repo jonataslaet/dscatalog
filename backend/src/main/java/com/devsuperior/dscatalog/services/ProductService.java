@@ -3,6 +3,7 @@ package com.devsuperior.dscatalog.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import com.devsuperior.dscatalog.repositories.CategoryRepository;
 import com.devsuperior.dscatalog.repositories.ProductRepository;
 import com.devsuperior.dscatalog.resources.dtos.CategoryDTO;
 import com.devsuperior.dscatalog.resources.dtos.ProductDTO;
+import com.devsuperior.dscatalog.resources.exceptions.DatabaseException;
 import com.devsuperior.dscatalog.resources.exceptions.EntityNotFoundException;
 
 @Service
@@ -66,6 +68,9 @@ public class ProductService {
 		}
 		catch (EmptyResultDataAccessException e) {
 			throw new EntityNotFoundException("Product not found");
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DatabaseException("Product depends on other entity");
 		}
 		
 	}
