@@ -19,4 +19,14 @@ public class ResourceExceptionHandler {
 		error.setStatus(HttpStatus.NOT_FOUND.value());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(error);
 	}
+	
+	@ExceptionHandler(DatabaseException.class)
+	public ResponseEntity<StandardError> databaseException(DatabaseException e, HttpServletRequest req){
+		StandardError error = new StandardError();
+		error.setError("Data restriction is being violated");
+		error.setMessage(e.getLocalizedMessage());
+		error.setPath(req.getServletPath());
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(error);
+	}
 }
