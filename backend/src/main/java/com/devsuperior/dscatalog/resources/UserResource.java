@@ -2,6 +2,8 @@ package com.devsuperior.dscatalog.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.devsuperior.dscatalog.resources.dtos.UserDTO;
-import com.devsuperior.dscatalog.resources.dtos.UserInsertNewDTO;
+import com.devsuperior.dscatalog.resources.dtos.UserInsertDTO;
+import com.devsuperior.dscatalog.resources.dtos.UserUpdateDTO;
 import com.devsuperior.dscatalog.services.UserService;
 
 @RestController
@@ -43,7 +46,7 @@ public class UserResource {
 	}
 
 	@PostMapping
-	ResponseEntity<UserDTO> insert(@RequestBody UserInsertNewDTO userDTO) {
+	ResponseEntity<UserDTO> insert(@RequestBody @Valid UserInsertDTO userDTO) {
 		UserDTO createdUserDTO = userService.insert(userDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdUserDTO.getId())
 				.toUri();
@@ -51,7 +54,7 @@ public class UserResource {
 	}
 
 	@PutMapping("/{id}")
-	ResponseEntity<UserDTO> update(@PathVariable("id") Long id, @RequestBody UserDTO userDTO) {
+	ResponseEntity<UserDTO> update(@PathVariable("id") Long id, @RequestBody @Valid UserUpdateDTO userDTO) {
 		UserDTO userDTO2 = userService.update(id, userDTO);
 		return ResponseEntity.status(204).body(userDTO2);
 	}

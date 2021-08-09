@@ -17,7 +17,8 @@ import com.devsuperior.dscatalog.repositories.RoleRepository;
 import com.devsuperior.dscatalog.repositories.UserRepository;
 import com.devsuperior.dscatalog.resources.dtos.RoleDTO;
 import com.devsuperior.dscatalog.resources.dtos.UserDTO;
-import com.devsuperior.dscatalog.resources.dtos.UserInsertNewDTO;
+import com.devsuperior.dscatalog.resources.dtos.UserInsertDTO;
+import com.devsuperior.dscatalog.resources.dtos.UserUpdateDTO;
 import com.devsuperior.dscatalog.resources.exceptions.DatabaseException;
 import com.devsuperior.dscatalog.resources.exceptions.EntityNotFoundException;
 
@@ -46,7 +47,7 @@ public class UserService {
 		return new UserDTO(userOptional.get());
 	}
 
-	public UserDTO insert(UserInsertNewDTO userDTO) {
+	public UserDTO insert(UserInsertDTO userDTO) {
 		User user = new User();
 		copyDtoToEntity(userDTO, user);
 		user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
@@ -54,7 +55,7 @@ public class UserService {
 		return new UserDTO(user);
 	}
 
-	public UserDTO update(Long id, UserDTO userDTO) {
+	public UserDTO update(Long id, UserUpdateDTO userDTO) {
 		User user = new User();
 		try {
 			findById(id);

@@ -2,6 +2,8 @@ package com.devsuperior.dscatalog.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +44,7 @@ public class ProductResource {
 	}
 	
 	@PostMapping
-	ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO productDTO) {
+	ResponseEntity<ProductDTO> insert(@RequestBody @Valid ProductDTO productDTO) {
 		ProductDTO createdProductDTO = productService.insert(productDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdProductDTO.getId())
 				.toUri();
@@ -50,7 +52,7 @@ public class ProductResource {
 	}
 	
 	@PutMapping("/{id}")
-	ResponseEntity<ProductDTO> update(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO) {
+	ResponseEntity<ProductDTO> update(@PathVariable("id") Long id, @RequestBody @Valid ProductDTO productDTO) {
 		ProductDTO productDTO2 = productService.update(id, productDTO);
 		return ResponseEntity.status(204).body(productDTO2);
 	}
