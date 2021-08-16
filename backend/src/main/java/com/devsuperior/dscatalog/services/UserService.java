@@ -7,6 +7,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +26,7 @@ import com.devsuperior.dscatalog.resources.exceptions.DatabaseException;
 import com.devsuperior.dscatalog.resources.exceptions.EntityNotFoundException;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -90,6 +93,15 @@ public class UserService {
 			Role role = roleRepository.findById(roleDTO.getId()).get();
 			user.getRoles().add(role);
 		}
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Optional<User> userByEmail = userRepository.findByEmail(email);
+		if (!userByEmail.isPresent()) {
+			throw new EntityNotFoundException("User not found for email: " + email);
+		}
+		return userByEmail.get();
 	}
 
 }
