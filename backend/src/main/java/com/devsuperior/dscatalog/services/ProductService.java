@@ -1,5 +1,7 @@
 package com.devsuperior.dscatalog.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +32,16 @@ public class ProductService {
 	
 	@Transactional(readOnly=true)
 	public Page<ProductDTO> findAllPaged(Long categoryId, String prodName, Pageable pageable) {
+		List<Category> categories = null;
 		Category category = null;
+		
 		Optional<Category> categoryOptional = categoryId == 0 ? Optional.empty() : categoryRepository.findById(categoryId);
 		if (categoryOptional.isPresent()) {
 			category = categoryOptional.get();
+			categories = new ArrayList<>();
+			categories.add(category);
 		}
-		Page<Product> productsPaged = productRepository.find(category, prodName, pageable);
+		Page<Product> productsPaged = productRepository.find(categories, prodName, pageable);
 		return productsPaged.map(c -> new ProductDTO(c));
 	}
 	
